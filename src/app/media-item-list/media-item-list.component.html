@@ -1,0 +1,16 @@
+<section>
+  <!--
+    [6]
+    Angular has 2 types of directives: Structural & Attribute
+    -
+    Structural : alter how elements are displayed in the DOM
+    ngIf, ngFor are few Structural directives that change how elements render in DOM
+    -
+    Attribute: will change how an element is rendered. it cant alter DOM but change its behavior
+    ngClass is a attribute directive and it alter the css to be added to the element based on condition
+  -->
+  <app-media-item *ngFor="let mediaItem of mediaItems" [mediaItem]="mediaItem"
+    [ngClass]="{'medium-movies': mediaItem.medium === 'Movies', 'medium-series': mediaItem.medium === 'Series'}"
+    (deleteEmit)="onDeleteEmit($event)">
+  </app-media-item>
+</section>

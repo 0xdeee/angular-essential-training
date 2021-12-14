@@ -1,7 +1,9 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { MediaItemComponent } from './media-item/media-item.component';
+import { MediaItemListComponent } from './media-item-list/media-item-list.component';
+import { CommonModule } from '@angular/common';
 
 /**
  * (2)
@@ -14,8 +16,9 @@ import { MediaItemComponent } from './media-item/media-item.component';
  * AppModule bootstraps AppComponent (any component)
  */
 @NgModule({
-  imports: [BrowserModule],
-  declarations: [AppComponent, MediaItemComponent],
+  imports: [BrowserModule, CommonModule],
+  declarations: [AppComponent, MediaItemComponent, MediaItemListComponent],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}
