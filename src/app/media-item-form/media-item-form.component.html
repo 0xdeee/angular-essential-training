@@ -24,7 +24,17 @@
     </li>
     <li>
       <label for="name">Name</label>
+      <!-- 
+        [10.c]
+        we can then go ahead and use the form object to display custom error message for 
+        all the fields that are invalid
+        here we get the formControl object of name field and check if it has error in 'pattern'
+        validator, and it displays error message if needed.
+       -->
       <input type="text" name="name" id="name" formControlName="name">
+      <div *ngIf="form.get('name').hasError('pattern')" class="error">
+        Name is invalid
+      </div>
     </li>
     <li>
       <label for="category">Category</label>
@@ -40,7 +50,10 @@
     <li>
       <label for="year">Year</label>
       <input type="text" name="year" id="year" maxlength="4" formControlName="year">
+      <div *ngIf="form.get('year').hasError('year')" class="error">
+        Year must in range of 1900 to 2100
+      </div>
     </li>
   </ul>
-  <button type="submit">Save</button>
+  <button type="submit" [disabled]="!form.valid">Save</button>
 </form>
