@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { MediaItemService } from '../service/media-item.service';
 
 @Component({
   selector: 'app-media-item-list',
@@ -6,59 +8,29 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./media-item-list.component.css'],
 })
 export class MediaItemListComponent implements OnInit {
-  mediaItems = [
-    {
-      id: 1,
-      name: 'Firebug',
-      medium: 'Series',
-      category: 'Science Fiction',
-      year: 2010,
-      watchedOn: 1294166565384,
-      isFavorite: false,
-    },
-    {
-      id: 2,
-      name: 'The Small Tall',
-      medium: 'Movies',
-      category: 'Comedy',
-      year: 2015,
-      watchedOn: null,
-      isFavorite: true,
-    },
-    {
-      id: 3,
-      name: 'The Redemption',
-      medium: 'Movies',
-      category: 'Action',
-      year: 2016,
-      watchedOn: null,
-      isFavorite: false,
-    },
-    {
-      id: 4,
-      name: 'Hoopers',
-      medium: 'Series',
-      category: 'Drama',
-      year: null,
-      watchedOn: null,
-      isFavorite: true,
-    },
-    {
-      id: 5,
-      name: 'Happy Joe: Cheery Road',
-      medium: 'Movies',
-      category: 'Action',
-      year: 2015,
-      watchedOn: 1457166565384,
-      isFavorite: false,
-    },
-  ];
+  mediaItems;
 
-  constructor() {}
+  constructor(
+    private mediaItemService: MediaItemService,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    /**
+     * [sec 7.c]
+     * we can get uri param if path is defined in that way 'path/:pathid'
+     * ActivatedRoute is a class provided by angular for that.
+     * paramMap property in that will have the uri param passed in the path
+     * we can get it using get() method by passing the name with which we defined it in router file
+     * this method returns an observable
+     */
+    this.activatedRoute.paramMap.subscribe((paramMap) => {
+      this.mediaItems = this.mediaItemService.get(paramMap.get('medium'));
+    });
+  }
 
   onDeleteEmit($event: any) {
     console.log('request to delete this', $event);
+    this.mediaItemService.delete($event);
   }
 }

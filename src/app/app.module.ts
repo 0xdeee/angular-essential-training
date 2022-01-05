@@ -8,6 +8,8 @@ import { FavoriteDirective } from './helper/favorite.directive';
 import { CategoryListPipe } from './helper/category-list.pipe';
 import { MediaItemFormComponent } from './media-item-form/media-item-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MediaItemService } from './service/media-item.service';
+import { router } from './app.routing';
 
 /**
  * (2)
@@ -20,7 +22,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
  * AppModule bootstraps AppComponent (any component)
  */
 @NgModule({
-  imports: [BrowserModule, CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    BrowserModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    router,
+  ],
   declarations: [
     AppComponent,
     MediaItemComponent,
@@ -29,6 +37,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CategoryListPipe,
     MediaItemFormComponent,
   ],
+  /**
+   * [12.a]
+   * we have to add the Service classes as provider in the module file.
+   * so the module will keep this service class singleton instance available in inject
+   * wherever required in this and all its child module
+   */
+  // providers: [MediaItemService],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],
 })

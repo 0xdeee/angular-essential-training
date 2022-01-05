@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { MediaItemService } from '../service/media-item.service';
 
 @Component({
   selector: 'app-media-item-form',
@@ -9,7 +16,19 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class MediaItemFormComponent implements OnInit {
   form: FormGroup;
 
-  constructor() {}
+  /**
+   * [11.a]
+   * Dependency injection is a highly essential feature in an application framework
+   * it enabled the separation of concern, modularization and unit testable code
+   *
+   * Angular has built in dependency handler, that for all angular services we can use
+   * component constructor to do dependency injection for those classes
+   */
+  constructor(
+    private formBuilder: FormBuilder,
+    private mediaItemService: MediaItemService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     /**
@@ -18,8 +37,8 @@ export class MediaItemFormComponent implements OnInit {
      * FormControl object represents unique fields in form
      * these are property bound its value through template using [ngForm] & formControlName
      */
-    this.form = new FormGroup({
-      medium: new FormControl('Movies'),
+    this.form = this.formBuilder.group({
+      medium: this.formBuilder.control('Movies'),
       /**
        * [10.a]
        * We can add built-in basic validators to form field using the Validators class
@@ -30,15 +49,15 @@ export class MediaItemFormComponent implements OnInit {
        * by default, the form will be submittable even if invalid. so we have to explicitly -
        * valid property in form object and disable submit button if the form is not valid
        */
-      name: new FormControl(
+      name: this.formBuilder.control(
         '',
         Validators.compose([
           Validators.required,
           Validators.pattern('[\\w\\-\\s\\/]+'),
         ])
       ),
-      category: new FormControl(''),
-      year: new FormControl('', this.yearValidator),
+      category: this.formBuilder.control(''),
+      year: this.formBuilder.control('', this.yearValidator),
     });
   }
 
@@ -64,5 +83,14 @@ export class MediaItemFormComponent implements OnInit {
 
   onSubmit(formData) {
     console.log(formData);
+    this.mediaItemService.add(formData.value);
+    /**
+     * [sec 7.d]
+     * we can also trigger routes from component based on business logic
+     * using Router calls from angular/router
+     * call the navigate() and pass list of URL (base url & target url)
+     * it will be navigated
+     */
+    this.router.navigate(['/', formData.value.medium]);
   }
 }
