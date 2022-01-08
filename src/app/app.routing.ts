@@ -15,7 +15,21 @@ import { MediaItemListComponent } from './media-item-list/media-item-list.compon
 
 const appRoutes: Routes = [
   // routes are to be defined form most specific to least specific
-  { path: 'add', component: MediaItemFormComponent },
+  /**
+   * [sec 7.g]
+   * ngModules allow us to develope standalone modules that're unit testable. but it also
+   * allows to LazyLoad each module, this greatly improves performance if done right
+   * if the router encounters 'add' route then only it load, bundles and sends MediaItemFormModule
+   * to the client it will not be send in default package.
+   * loadChildren can be used to lazy load a child module
+   */
+  {
+    path: 'add',
+    loadChildren: () =>
+      import('./media-item-form/media-item-form.module').then(
+        (m) => m.MediaItemFormModule
+      ),
+  },
   // ":" using means its a route param
   { path: ':medium', component: MediaItemListComponent },
   { path: '', redirectTo: 'all', pathMatch: 'full' },

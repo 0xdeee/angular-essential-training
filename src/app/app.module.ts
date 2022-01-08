@@ -6,10 +6,8 @@ import { MediaItemListComponent } from './media-item-list/media-item-list.compon
 import { CommonModule } from '@angular/common';
 import { FavoriteDirective } from './helper/favorite.directive';
 import { CategoryListPipe } from './helper/category-list.pipe';
-import { MediaItemFormComponent } from './media-item-form/media-item-form.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MediaItemService } from './service/media-item.service';
 import { router } from './app.routing';
+import { MediaItemFormModule } from './media-item-form/media-item-form.module';
 
 /**
  * (2)
@@ -22,20 +20,13 @@ import { router } from './app.routing';
  * AppModule bootstraps AppComponent (any component)
  */
 @NgModule({
-  imports: [
-    BrowserModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    router,
-  ],
+  imports: [BrowserModule, CommonModule, router],
   declarations: [
     AppComponent,
     MediaItemComponent,
     MediaItemListComponent,
     FavoriteDirective,
     CategoryListPipe,
-    MediaItemFormComponent,
   ],
   /**
    * [12.a]
