@@ -8,6 +8,7 @@ import { FavoriteDirective } from './helper/favorite.directive';
 import { CategoryListPipe } from './helper/category-list.pipe';
 import { router } from './app.routing';
 import { MediaItemFormModule } from './media-item-form/media-item-form.module';
+import { UserComponent } from './user/user.component';
 
 /**
  * (2)
@@ -27,6 +28,7 @@ import { MediaItemFormModule } from './media-item-form/media-item-form.module';
     MediaItemListComponent,
     FavoriteDirective,
     CategoryListPipe,
+    UserComponent,
   ],
   /**
    * [12.a]
